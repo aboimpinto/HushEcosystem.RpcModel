@@ -29,7 +29,7 @@ public static class StringExtensions
         return Convert.ToBase64String(compressedBytes);
      }
 
-    public static string Decompress(string compressedMessage)
+    public static string Decompress(this string compressedMessage)
     {
         byte[] decompressedBytes;
 
