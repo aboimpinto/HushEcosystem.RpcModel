@@ -30,7 +30,7 @@ public class HandshakeDeserializeStrategy : ICommandDeserializeStrategy
         }
     }
 
-    public async Task Handle(string commandJson)
+    public async Task Handle(string commandJson, string channelId)
     {
         var handShakeRequest = JsonSerializer.Deserialize<HandshakeRequest>(commandJson);
 
@@ -39,6 +39,6 @@ public class HandshakeDeserializeStrategy : ICommandDeserializeStrategy
             throw new InvalidOperationException($"Cannot deserialize the HandshakeRequest command: {commandJson}");
         }
 
-        await this._eventAggregator.PublishAsync(new HandShakeRequestedEvent(handShakeRequest));
+        await this._eventAggregator.PublishAsync(new HandShakeRequestedEvent(channelId, handShakeRequest));
     }
 }
