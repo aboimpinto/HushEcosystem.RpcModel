@@ -5,11 +5,11 @@ using Olimpo;
 
 namespace HushEcosystem.RpcModel.CommandDeserializeStrategies;
 
-public class HandshakeDeserializeStrategy : ICommandDeserializeStrategy
+public class HandshakeRequestDeserializeStrategy : ICommandDeserializeStrategy
 {
     private readonly IEventAggregator _eventAggregator;
 
-    public HandshakeDeserializeStrategy(IEventAggregator eventAggregator)
+    public HandshakeRequestDeserializeStrategy(IEventAggregator eventAggregator)
     {
         this._eventAggregator = eventAggregator;
     }
@@ -21,7 +21,7 @@ public class HandshakeDeserializeStrategy : ICommandDeserializeStrategy
             var element = jsonDocument.RootElement;
             var command = element.GetProperty("Command").GetString();
 
-            if (command == "HandshakeRequest")
+            if (command == HandshakeRequest.CommandCode)
             {
                 return true;
             }
@@ -39,6 +39,6 @@ public class HandshakeDeserializeStrategy : ICommandDeserializeStrategy
             throw new InvalidOperationException($"Cannot deserialize the HandshakeRequest command: {commandJson}");
         }
 
-        await this._eventAggregator.PublishAsync(new HandShakeRequestedEvent(channelId, handShakeRequest));
+        await this._eventAggregator.PublishAsync(new HandshakeRequestedEvent(channelId, handShakeRequest));
     }
 }

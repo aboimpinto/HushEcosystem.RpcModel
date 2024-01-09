@@ -10,9 +10,21 @@ public static class RpcModelHostBuilder
     {
         builder.ConfigureServices((hostContext, services) =>
         {
-            services.AddSingleton<ICommandDeserializeStrategy, HandshakeDeserializeStrategy>();
+            services.AddSingleton<ICommandDeserializeStrategy, HandshakeRequestDeserializeStrategy>();
+            services.AddSingleton<ICommandDeserializeStrategy, HandshakeResponseDeserializeStrategy>();
         });
 
         return builder;
+    }
+}
+
+public static class ServiceCollectionExtensions
+{
+    public static IServiceCollection RegisterRpcModel(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<ICommandDeserializeStrategy, HandshakeRequestDeserializeStrategy>();
+        serviceCollection.AddSingleton<ICommandDeserializeStrategy, HandshakeResponseDeserializeStrategy>();
+
+        return serviceCollection;
     }
 }

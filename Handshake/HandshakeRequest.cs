@@ -4,6 +4,8 @@ namespace HushEcosystem.RpcModel.Handshake;
 
 public class HandshakeRequest : CommandBase
 {
+    public static string CommandCode = "HandshakeRequest";
+
     public ClientType ClientType { get; set; }
 
     public string NodeId { get; set; } = string.Empty;
@@ -12,7 +14,7 @@ public class HandshakeRequest : CommandBase
 
     public HandshakeRequest()
     {
-        this.Command = "HandshakeRequest";
+        this.Command = CommandCode;
     }
 
     public override string ToJson()
